@@ -1,0 +1,91 @@
+plugins {
+    id 'java'
+}
+
+group = 'dev.smolen'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url 'https://repo.fancyinnovations.com/releases' }
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    // Hytale Server API - provided at runtime by the server
+    // Option 1: Local JAR (copy HytaleServer.jar to libs/ folder)
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Option 2: Maven coordinates (when available)
+    // compileOnly 'com.hypixel.hytale:HytaleServer-parent:1.0-SNAPSHOT'
+
+    // Annotations for null safety
+    compileOnly 'org.jetbrains:annotations:24.1.0'
+}
+
+jar {
+    archiveBaseName = 'PicklePirateFlag'
+    archiveVersion = version
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from('src/main/resources') {
+        include '**/*'
+    }
+
+    manifest {
+        attributes(
+            'Implementation-Title': 'Pickle Pirate Flag',
+            'Implementation-Version': version
+        )
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+// Deploy to local Hytale server
+tasks.register('deploy', Copy) {
+    dependsOn jar
+    from jar.archiveFile
+    into System.getProperty('user.home') + '/hytale-server/mods'
+    doLast {
+        println "Deployed ${jar.archiveFileName.get()} to Hytale server mods folder"
+    }
+}
+
+// Deploy pack assets to Hytale server
+tasks.register('deployAssets', Copy) {
+    from 'pack'
+    into '/mnt/c/hytale-server/packs/PicklePirateFlag'
+    doLast {
+        println "Deployed pack assets to Hytale server packs folder"
+    }
+}
+
+// Full test deployment: build JAR + deploy assets
+tasks.register('testModel') {
+    dependsOn jar, deployAssets
+    doLast {
+        println ""
+        println "============================================"
+        println "  TEST MODEL DEPLOYMENT COMPLETE"
+        println "============================================"
+        println ""
+        println "JAR deployed to: ~/hytale-server/mods/"
+        println "Pack deployed to: /mnt/c/hytale-server/packs/PicklePirateFlag/"
+        println ""
+        println "Next steps:"
+        println "  1. Stop Hytale server if running"
+        println "  2. Start server: scripts/start-server.bat"
+        println "  3. Test the model in-game"
+        println ""
+    }
+}

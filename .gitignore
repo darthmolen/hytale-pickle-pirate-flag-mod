@@ -1,0 +1,36 @@
+# Build outputs
+build/
+out/
+*.class
+*.jar
+*.war
+
+# Gradle
+.gradle/
+gradle/wrapper/
+gradlew
+gradlew.bat
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Research folder (reference materials)
+research/
+
+# Logs
+*.log
+logs/
+
+# Local configuration
+local.properties

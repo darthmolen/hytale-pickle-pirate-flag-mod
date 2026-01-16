@@ -1,0 +1,32 @@
+{
+  "Name": "flag_wave",
+  "Duration": 2.0,
+  "Loop": true,
+  "Keyframes": [
+    {
+      "Time": 0.0,
+      "Bone": "flag",
+      "Rotation": [0, 0, -5]
+    },
+    {
+      "Time": 0.5,
+      "Bone": "flag",
+      "Rotation": [0, 0, 5]
+    },
+    {
+      "Time": 1.0,
+      "Bone": "flag",
+      "Rotation": [0, 0, -5]
+    },
+    {
+      "Time": 1.5,
+      "Bone": "flag",
+      "Rotation": [0, 0, 5]
+    },
+    {
+      "Time": 2.0,
+      "Bone": "flag",
+      "Rotation": [0, 0, -5]
+    }
+  ]
+}

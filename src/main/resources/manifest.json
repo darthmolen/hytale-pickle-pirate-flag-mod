@@ -1,0 +1,10 @@
+{
+    "Group": "dev.smolen",
+    "Name": "PicklePirateFlag",
+    "Version": "1.0.0",
+    "Main": "dev.smolen.pickleflag.PickleFlagPlugin",
+    "Description": "Adds a plantable pickle pirate flagpole that waves in the wind and shows as a map marker. Plant your flag to mark your territory!",
+    "Authors": ["smolen"],
+    "Dependencies": [],
+    "ServerVersion": ">=1.0.0"
+}

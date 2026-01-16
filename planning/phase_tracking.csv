@@ -1,0 +1,2 @@
+phase,attempt,timestamp,status,duration_mins,notes
+0,a,2026-01-15T12:00:00,success,10,gradle testModel task added - deploys JAR and pack assets
