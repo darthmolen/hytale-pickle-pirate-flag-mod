@@ -1,32 +1,139 @@
 {
-  "Name": "flag_wave",
-  "Duration": 2.0,
-  "Loop": true,
-  "Keyframes": [
-    {
-      "Time": 0.0,
-      "Bone": "flag",
-      "Rotation": [0, 0, -5]
+  "formatVersion": 1,
+  "duration": 120,
+  "holdLastKeyframe": false,
+  "nodeAnimations": {
+    "flag_1": {
+      "position": [],
+      "orientation": [
+        {
+          "time": 0,
+          "delta": {"x": 0, "y": 0, "z": 0, "w": 1},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 30,
+          "delta": {"x": -0.01745, "y": 0, "z": 0, "w": 0.99985},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 60,
+          "delta": {"x": 0, "y": 0, "z": 0, "w": 1},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 90,
+          "delta": {"x": 0.01745, "y": 0, "z": 0, "w": 0.99985},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 120,
+          "delta": {"x": 0, "y": 0, "z": 0, "w": 1},
+          "interpolationType": "linear"
+        }
+      ],
+      "shapeStretch": [],
+      "shapeVisible": [],
+      "shapeUvOffset": []
     },
-    {
-      "Time": 0.5,
-      "Bone": "flag",
-      "Rotation": [0, 0, 5]
+    "flag_2": {
+      "position": [],
+      "orientation": [
+        {
+          "time": 0,
+          "delta": {"x": -0.0185, "y": 0, "z": 0, "w": 0.99983},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 30,
+          "delta": {"x": -0.0185, "y": 0, "z": 0, "w": 0.99983},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 60,
+          "delta": {"x": 0.0185, "y": 0, "z": 0, "w": 0.99983},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 90,
+          "delta": {"x": 0.0185, "y": 0, "z": 0, "w": 0.99983},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 120,
+          "delta": {"x": -0.0185, "y": 0, "z": 0, "w": 0.99983},
+          "interpolationType": "linear"
+        }
+      ],
+      "shapeStretch": [],
+      "shapeVisible": [],
+      "shapeUvOffset": []
     },
-    {
-      "Time": 1.0,
-      "Bone": "flag",
-      "Rotation": [0, 0, -5]
+    "flag_3": {
+      "position": [],
+      "orientation": [
+        {
+          "time": 0,
+          "delta": {"x": -0.0349, "y": 0, "z": 0, "w": 0.99939},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 30,
+          "delta": {"x": 0, "y": 0, "z": 0, "w": 1},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 60,
+          "delta": {"x": 0.0349, "y": 0, "z": 0, "w": 0.99939},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 90,
+          "delta": {"x": 0, "y": 0, "z": 0, "w": 1},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 120,
+          "delta": {"x": -0.0349, "y": 0, "z": 0, "w": 0.99939},
+          "interpolationType": "linear"
+        }
+      ],
+      "shapeStretch": [],
+      "shapeVisible": [],
+      "shapeUvOffset": []
     },
-    {
-      "Time": 1.5,
-      "Bone": "flag",
-      "Rotation": [0, 0, 5]
-    },
-    {
-      "Time": 2.0,
-      "Bone": "flag",
-      "Rotation": [0, 0, -5]
+    "flag_4": {
+      "position": [],
+      "orientation": [
+        {
+          "time": 0,
+          "delta": {"x": -0.03089, "y": 0, "z": 0, "w": 0.99952},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 30,
+          "delta": {"x": 0.03089, "y": 0, "z": 0, "w": 0.99952},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 60,
+          "delta": {"x": 0.03089, "y": 0, "z": 0, "w": 0.99952},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 90,
+          "delta": {"x": -0.03089, "y": 0, "z": 0, "w": 0.99952},
+          "interpolationType": "linear"
+        },
+        {
+          "time": 120,
+          "delta": {"x": -0.03089, "y": 0, "z": 0, "w": 0.99952},
+          "interpolationType": "linear"
+        }
+      ],
+      "shapeStretch": [],
+      "shapeVisible": [],
+      "shapeUvOffset": []
     }
-  ]
+  }
 }
