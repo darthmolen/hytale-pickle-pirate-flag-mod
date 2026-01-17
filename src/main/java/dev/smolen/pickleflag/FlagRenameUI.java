@@ -60,17 +60,19 @@ public class FlagRenameUI extends InteractiveCustomUIPage<FlagRenameUI.RenameDat
         // Set the current flag name in the text field
         uiCommandBuilder.set("#FlagName.Value", this.flagData.name());
 
-        // Bind the text field value change event
+        // Bind Confirm button click - reads the text field value when clicked
         uiEventBuilder.addEventBinding(
-            CustomUIEventBindingType.ValueChanged,
-            "#FlagName",
-            EventData.of("@FlagName", "#FlagName.Value"),
+            CustomUIEventBindingType.Activating,
+            "#SetButton",
+            EventData.of("@ConfirmName", "#FlagName.Value"),
             false
         );
+
+        // Cancel button and Back button will trigger onDismiss - no binding needed
     }
 
     /**
-     * Handle data events from the UI (when player changes the name).
+     * Handle data events from the UI.
      */
     @Override
     public void handleDataEvent(Ref<EntityStore> ref,
@@ -78,42 +80,42 @@ public class FlagRenameUI extends InteractiveCustomUIPage<FlagRenameUI.RenameDat
                                 RenameData data) {
         super.handleDataEvent(ref, store, data);
 
-        // Validate and apply the new name
-        if (data.flagName != null && !data.flagName.isBlank()) {
-            String newName = data.flagName.trim();
+        // Confirm button was clicked - save the name and close
+        if (data.confirmName != null) {
+            String newName = data.confirmName.trim();
 
-            // Limit name length
-            if (newName.length() > 32) {
-                newName = newName.substring(0, 32);
+            if (!newName.isBlank()) {
+                // Limit name length
+                if (newName.length() > 32) {
+                    newName = newName.substring(0, 32);
+                }
+
+                LOGGER.atInfo().log("Confirming rename of flag " + this.flagData.id() +
+                    " from '" + this.flagData.name() + "' to '" + newName + "'");
+
+                // Update the flag name in the manager
+                PickleFlagPlugin.get().getFlagManager().renameFlag(this.flagData.id(), newName);
             }
 
-            LOGGER.atInfo().log("Renaming flag " + this.flagData.id() +
-                " from '" + this.flagData.name() + "' to '" + newName + "'");
-
-            // Update the flag name in the manager
-            PickleFlagPlugin.get().getFlagManager().renameFlag(this.flagData.id(), newName);
+            // Close the UI
+            this.close();
         }
-
-        // Send UI update
-        UICommandBuilder commandBuilder = new UICommandBuilder();
-        UIEventBuilder eventBuilder = new UIEventBuilder();
-        this.sendUpdate(commandBuilder, eventBuilder, false);
     }
 
     /**
-     * Data class for UI event data (the flag name input).
+     * Data class for UI event data (Confirm button sends the text field value).
      */
     public static class RenameData {
 
         public static final BuilderCodec<RenameData> CODEC = BuilderCodec
             .builder(RenameData.class, RenameData::new)
             .addField(
-                new KeyedCodec<>("@FlagName", Codec.STRING),
-                (data, name) -> data.flagName = name,
-                data -> data.flagName
+                new KeyedCodec<>("@ConfirmName", Codec.STRING, false),  // false = optional
+                (data, name) -> data.confirmName = name,
+                data -> data.confirmName
             )
             .build();
 
-        private String flagName;
+        private String confirmName;
     }
 }

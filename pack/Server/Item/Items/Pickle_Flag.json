@@ -1,0 +1,56 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.pickle_flag.name"
+  },
+  "MaxStack": 16,
+  "Icon": "Icons/ItemsGenerated/pickle_flag.png",
+  "Categories": [
+    "Blocks.Deco"
+  ],
+  "Interactions": {
+    "Primary": "Root_Unarmed_Attack_Swing_Left",
+    "Secondary": "Block_Secondary"
+  },
+  "BlockType": {
+    "Material": "Empty",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/pickle_pirate_flagpole.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "BlockTextures/pickle_pirate_flagpole.png",
+        "Weight": 1
+      }
+    ],
+    "CustomModelAnimation": "Blocks/Animations/animation.flag_wave.blockyanim",
+    "Looping": true,
+    "CustomModelScale": 1,
+    "HitboxType": "Block_Flat",
+    "VariantRotation": "NESW",
+    "BlockSoundSetId": "Wood",
+    "BlockParticleSetId": "Wood",
+    "PlacementSettings": {
+      "AllowRotationKey": true,
+      "PlaceInEmptyBlocks": true
+    },
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "Gathering": {
+      "Soft": {
+        "IsWeaponBreakable": false
+      }
+    },
+    "BlockEntity": {
+      "Components": {
+        "PickleFlagBlockData": {}
+      }
+    }
+  },
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Blocks_Wood"
+}

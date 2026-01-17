@@ -117,8 +117,8 @@ public class PickleFlagPlugin extends JavaPlugin {
                 .put("pickle_flag_plugin", new PickleFlagMarkerProvider());
         });
 
-        // TODO: Register block interaction handler for renaming flags once we understand the real API
-        // BlockInteractionRegistry.register("pickle_flag_interaction", new FlagInteractionHandler());
+        // Register commands for flag management
+        this.getCommandRegistry().registerCommand(new PickleFlagCommand());
 
         LOGGER.atInfo().log("Pickle Pirate Flag plugin setup complete!");
     }

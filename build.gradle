@@ -51,41 +51,41 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-// Deploy to local Hytale server
-tasks.register('deploy', Copy) {
+// Server mods folder path
+def serverModsDir = '/mnt/c/hytale-server/mods'
+
+// Deploy JAR to Hytale server
+tasks.register('deployJar', Copy) {
     dependsOn jar
     from jar.archiveFile
-    into System.getProperty('user.home') + '/hytale-server/mods'
+    into serverModsDir
     doLast {
-        println "Deployed ${jar.archiveFileName.get()} to Hytale server mods folder"
+        println "Deployed ${jar.archiveFileName.get()} to ${serverModsDir}"
     }
 }
 
-// Deploy pack assets to Hytale server
-tasks.register('deployAssets', Copy) {
+// Deploy pack assets to Hytale server (models, textures, animations, UI, items)
+// Uses Sync to remove deleted files from destination
+tasks.register('deployAssets', Sync) {
     from 'pack'
-    into '/mnt/c/hytale-server/packs/PicklePirateFlag'
+    into "${serverModsDir}/PicklePirateFlag"
     doLast {
-        println "Deployed pack assets to Hytale server packs folder"
+        println "Synced pack assets to ${serverModsDir}/PicklePirateFlag/"
     }
 }
 
-// Full test deployment: build JAR + deploy assets
-tasks.register('testModel') {
-    dependsOn jar, deployAssets
+// Full deployment: JAR + assets
+tasks.register('deploy') {
+    dependsOn deployJar, deployAssets
     doLast {
         println ""
         println "============================================"
-        println "  TEST MODEL DEPLOYMENT COMPLETE"
+        println "  DEPLOYMENT COMPLETE"
         println "============================================"
+        println "JAR: ${serverModsDir}/PicklePirateFlag-${version}.jar"
+        println "Assets: ${serverModsDir}/PicklePirateFlag/"
         println ""
-        println "JAR deployed to: ~/hytale-server/mods/"
-        println "Pack deployed to: /mnt/c/hytale-server/packs/PicklePirateFlag/"
-        println ""
-        println "Next steps:"
-        println "  1. Stop Hytale server if running"
-        println "  2. Start server: scripts/start-server.bat"
-        println "  3. Test the model in-game"
+        println "Restart the Hytale server to load changes."
         println ""
     }
 }

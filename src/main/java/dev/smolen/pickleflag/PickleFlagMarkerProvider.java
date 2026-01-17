@@ -29,11 +29,8 @@ import java.util.List;
  */
 public class PickleFlagMarkerProvider implements WorldMapManager.MarkerProvider {
 
-    // Icon for discovered flags
-    private static final String DISCOVERED_ICON = "PickleFlag_Marker.png";
-
-    // Icon for undiscovered flags
-    private static final String UNDISCOVERED_ICON = "PickleFlag_Marker_Undiscovered.png";
+    // Map marker icon (matches Phase 1 asset)
+    private static final String DISCOVERED_ICON = "Pickle_Flag.png";
 
     /**
      * Called by the game to update map markers for a player.
@@ -51,24 +48,13 @@ public class PickleFlagMarkerProvider implements WorldMapManager.MarkerProvider 
                        int chunkViewRadiusSquared,
                        int playerChunkX, int playerChunkZ) {
 
-        // Get player's discovery data
-        PlayerFlagData playerFlagData = PickleFlagPlugin.get().getFlagManager()
-            .getPlayerFlagData(worldMapTracker.getPlayer().getUuid());
-
         // Iterate through all placed flags
         for (FlagManager.FlagData flag : PickleFlagPlugin.get().getFlagManager().getAllFlags()) {
 
-            // Check if player has discovered this flag
-            boolean discovered = playerFlagData != null &&
-                playerFlagData.hasDiscoveredFlag(flag.id());
-
-            // Create unique marker ID
-            String markerId = (discovered ? "Discovered" : "Undiscovered") + "PickleFlag-" + flag.id();
-
-            // Determine display name
-            String displayName = discovered ?
-                "Pickle Flag - " + flag.name() :
-                "Unknown Pickle Flag";
+            // TODO: Discovery system disabled until proximity detection is implemented
+            // All flags shown as discovered for now
+            String markerId = "PickleFlag-" + flag.id();
+            String displayName = flag.name();
 
             // Send marker to map
             worldMapTracker.trySendMarker(
@@ -83,10 +69,10 @@ public class PickleFlagMarkerProvider implements WorldMapManager.MarkerProvider 
                 (id, name, flagData) -> new MapMarker(
                     id,
                     name,
-                    discovered ? DISCOVERED_ICON : UNDISCOVERED_ICON,
+                    DISCOVERED_ICON,
                     PositionUtil.toTransformPacket(new Transform(
                         flagData.x(), flagData.y(), flagData.z())),
-                    createContextMenuItems(flagData, discovered, worldMapTracker)
+                    createContextMenuItems(flagData, worldMapTracker)
                 )
             );
         }
@@ -96,23 +82,16 @@ public class PickleFlagMarkerProvider implements WorldMapManager.MarkerProvider 
      * Create context menu items for a flag marker (right-click menu).
      *
      * @param flag            The flag data
-     * @param discovered      Whether the player has discovered this flag
      * @param worldMapTracker The player's map tracker
      * @return Array of context menu items, or null if none
      */
     private ContextMenuItem[] createContextMenuItems(FlagManager.FlagData flag,
-                                                      boolean discovered,
                                                       WorldMapTracker worldMapTracker) {
 
         List<ContextMenuItem> items = new ArrayList<>();
 
-        if (discovered) {
-            // Could add teleport option here if desired
-            // items.add(new ContextMenuItem("Teleport", "pickleflag tp " + flag.id()));
-
-            // Add rename option for flag owner (would need permission check)
-            // items.add(new ContextMenuItem("Rename", "pickleflag rename " + flag.id()));
-        }
+        // Add rename option - opens the rename UI via command
+        items.add(new ContextMenuItem("Rename", "pickleflag manage " + flag.id()));
 
         if (items.isEmpty()) {
             return null;
