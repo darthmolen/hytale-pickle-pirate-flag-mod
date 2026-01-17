@@ -8,18 +8,19 @@ If you already have a Hytale server running:
 
 1. Download `PicklePirateFlag-1.0.0.jar`
 2. Copy to your server's `mods/` folder
-3. Restart the server
-4. Done!
+3. Copy the `pack/` folder to `mods/PicklePirateFlag/`
+4. Restart the server
+5. Done!
 
 ## Prerequisites
 
 ### For Server Operators
-- Hytale dedicated server (version 1.0.0 or later) — see [SERVER_SETUP.md](SERVER_SETUP.md) for download instructions using `hytale-downloader`
+- Hytale dedicated server (version 2026.01+)
 - Write access to the server's `mods/` folder
 
 ### For Developers
 - Java 25 JDK
-- Gradle 9.2.0 (for building from source)
+- Gradle (for building from source)
 
 > **Note**: Players don't need to install anything! Hytale mods are server-side only.
 
@@ -28,32 +29,31 @@ If you already have a Hytale server running:
 ### Method 1: Pre-built JAR (Recommended)
 
 1. **Download the mod**
-   - Get `PicklePirateFlag-1.0.0.jar` from the releases
+   - Get `PicklePirateFlag-1.0.0.jar` from releases
 
 2. **Locate your server's mods folder**
    ```
-   your-hytale-server/
-   └── mods/           <-- Put the JAR here
+   hytale-server/
+   └── mods/           <-- Put JAR and pack here
    ```
 
 3. **Copy the JAR**
    ```bash
-   cp PicklePirateFlag-1.0.0.jar ~/hytale-server/mods/
+   cp PicklePirateFlag-1.0.0.jar /path/to/hytale-server/mods/
    ```
 
-4. **Restart the server**
+4. **Copy the asset pack**
    ```bash
-   # Stop the server if running
-   # Then start it again
-   ./start-server.sh
+   cp -r pack /path/to/hytale-server/mods/PicklePirateFlag
    ```
 
-5. **Verify installation**
+5. **Restart the server**
+
+6. **Verify installation**
    Check the server logs for:
    ```
-   [INFO] Pickle Pirate Flag v1.0.0 loading...
-   [INFO] Setting up Pickle Pirate Flag plugin...
-   [INFO] Pickle Pirate Flag plugin setup complete!
+   [INFO] [PluginManager] - dev.smolen:PicklePirateFlag from path PicklePirateFlag-1.0.0.jar
+   [INFO] [PickleFlagPlugin] Pickle Pirate Flag v1.0.0 loading...
    ```
 
 ### Method 2: Build from Source
@@ -66,17 +66,13 @@ If you already have a Hytale server running:
 
 2. **Build the mod**
    ```bash
-   ./scripts/build.sh
+   ./gradlew jar
    ```
 
 3. **Deploy to server**
    ```bash
-   ./scripts/deploy.sh ~/hytale-server
-   ```
-
-   Or manually copy:
-   ```bash
-   cp build/libs/PicklePirateFlag-1.0.0.jar ~/hytale-server/mods/
+   cp build/libs/PicklePirateFlag-1.0.0.jar /path/to/hytale-server/mods/
+   cp -r pack /path/to/hytale-server/mods/PicklePirateFlag
    ```
 
 4. **Restart the server**
@@ -84,11 +80,10 @@ If you already have a Hytale server running:
 ## Verification
 
 ### Server-Side
-Check your server logs (`logs/latest.log`) for:
+Check your server logs in `logs/` folder (files are timestamped like `2026-01-17_12-31-16_server.log`):
 ```
-[INFO] Pickle Pirate Flag v1.0.0 loading...
-[INFO] Setting up Pickle Pirate Flag plugin...
-[INFO] Pickle Pirate Flag plugin setup complete!
+[INFO] [PluginManager] - dev.smolen:PicklePirateFlag from path PicklePirateFlag-1.0.0.jar
+[INFO] [PickleFlagPlugin] Pickle Pirate Flag v1.0.0 loading...
 ```
 
 ### In-Game
@@ -110,23 +105,23 @@ Check your server logs (`logs/latest.log`) for:
 3. Ensure the server fully restarted
 4. Check for error messages in logs
 
-### "Class not found" Errors
+### "Failed to load any asset packs"
 
-**Symptom**: `ClassNotFoundException` or `NoClassDefFoundError`
-
-**Solutions**:
-1. Ensure Java 25 is installed: `java -version`
-2. Check server version compatibility
-3. Rebuild from source if using custom build
-
-### Flag Not Appearing
-
-**Symptom**: Can't find the flag item in game
+**Symptom**: Server shuts down with asset pack error
 
 **Solutions**:
-1. The flag may need a custom block definition (see below)
-2. Check Creative Mode item list
-3. Verify plugin loaded in logs
+1. Ensure pack folder is in `mods/PicklePirateFlag/` (not just `packs/`)
+2. Check pack manifest.json exists and is valid JSON
+3. Re-extract server Assets.zip if HytaleAssets is corrupted
+
+### Texture Not Displaying
+
+**Symptom**: Model appears but textures are wrong/white
+
+**Solutions**:
+1. Check UV offsets are within texture bounds
+2. Verify texture file exists at correct path in pack
+3. Check `pickle_flag.json` references correct model and texture paths
 
 ### Map Marker Not Showing
 
@@ -143,66 +138,37 @@ Currently, the mod doesn't require configuration. Future versions may add:
 - `config/pickleflag.json` for customization
 - Permission nodes for admin controls
 
-## Custom Assets
-
-To customize textures or models:
-
-1. Extract the JAR:
-   ```bash
-   unzip PicklePirateFlag-1.0.0.jar -d extracted/
-   ```
-
-2. Modify files in `extracted/assets/`
-
-3. Repack:
-   ```bash
-   cd extracted
-   zip -r ../PicklePirateFlag-1.0.0.jar *
-   ```
-
-See `assets/textures/README.md` and `assets/models/README.md` for texture specifications.
-
 ## Uninstalling
 
 1. Stop the server
-2. Remove the JAR:
+2. Remove the JAR and pack:
    ```bash
-   rm ~/hytale-server/mods/PicklePirateFlag-1.0.0.jar
+   rm /path/to/hytale-server/mods/PicklePirateFlag-1.0.0.jar
+   rm -rf /path/to/hytale-server/mods/PicklePirateFlag
    ```
 3. Restart the server
 
-> **Note**: Placed flags will remain in the world but won't function. To remove them, either:
-> - Manually break them before uninstalling
-> - Edit the world files (advanced)
+> **Note**: Placed flags will remain in the world but won't function.
 
 ## Updates
 
 To update to a new version:
 
 1. Stop the server
-2. Backup your existing JAR (optional)
-3. Replace with the new version
-4. Restart the server
-
-Most updates are backward-compatible, but check the changelog for migration notes.
-
-## Getting Help
-
-- **Issues**: Open an issue on GitHub
-- **Discord**: Ask in the Hytale modding channels
-- **Documentation**: See `HOW_IT_WAS_MADE.md` for technical details
-
----
+2. Replace JAR and pack folder with new versions
+3. Restart the server
 
 ## File Locations Reference
 
 | File | Location |
 |------|----------|
 | Mod JAR | `server/mods/PicklePirateFlag-1.0.0.jar` |
-| Server logs | `server/logs/latest.log` |
+| Asset Pack | `server/mods/PicklePirateFlag/` |
+| Server logs | `server/logs/YYYY-MM-DD_HH-MM-SS_server.log` |
 | World data | `server/universe/` |
-| Config (future) | `server/config/pickleflag.json` |
 
----
+## Getting Help
 
-*Happy flag planting! Arr! 🏴‍☠️🥒*
+- **Issues**: Open an issue on GitHub
+- **Discord**: Ask in the Hytale modding channels
+- **Documentation**: See `CLAUDE.md` in project root for technical details

@@ -16,10 +16,10 @@
     "Opacity": "Transparent",
     "BlockSoundSetId": "Cloth",
     "BlockParticleSetId": "Cloth",
-    "CustomModel": "Models/pickle_flagpole.bbmodel",
+    "CustomModel": "Models/pickle_pirate_flagpole.blockymodel",
     "CustomModelTexture": [
       {
-        "Texture": "BlockTextures/flagpole.png",
+        "Texture": "BlockTextures/pickle_pirate_flagpole.png",
         "Weight": 1
       }
     ],
