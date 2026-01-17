@@ -89,3 +89,39 @@ tasks.register('deploy') {
         println ""
     }
 }
+
+// ============================================
+// CurseForge Distribution Packaging
+// ============================================
+
+// Create asset pack ZIP for CurseForge
+tasks.register('packageAssets', Zip) {
+    archiveBaseName = 'PicklePirateFlag-Assets'
+    archiveVersion = version
+    from 'pack'
+    destinationDirectory = file('build/dist')
+}
+
+// Create combined distribution ZIP (JAR + Assets + README)
+// Pack contents at root (manifest.json, Common/, Server/) for CurseForge compatibility
+tasks.register('packageAll', Zip) {
+    dependsOn jar, packageAssets
+    archiveBaseName = 'PicklePirateFlag-Complete'
+    archiveVersion = version
+    destinationDirectory = file('build/dist')
+
+    from(jar.archiveFile) { into '.' }
+    from('pack') { into '.' }
+    from('README.md') { into '.' }
+
+    doLast {
+        println ""
+        println "============================================"
+        println "  CURSEFORGE PACKAGES READY"
+        println "============================================"
+        println "JAR: build/libs/PicklePirateFlag-${version}.jar"
+        println "Assets: build/dist/PicklePirateFlag-Assets-${version}.zip"
+        println "Combined: build/dist/PicklePirateFlag-Complete-${version}.zip"
+        println ""
+    }
+}

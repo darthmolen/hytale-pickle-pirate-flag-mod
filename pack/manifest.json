@@ -1,5 +1,18 @@
 {
   "Group": "PicklePirate",
   "Name": "PicklePirateFlag",
-  "Version": "1.0.0"
+  "Version": "1.0.0",
+  "Description": "Plantable pickle pirate flagpole with wave animation and map marker support",
+  "Authors": [
+    {
+      "Name": "DarthMolen",
+      "Email": "",
+      "Url": ""
+    }
+  ],
+  "Website": "",
+  "ServerVersion": "*",
+  "Dependencies": {},
+  "OptionalDependencies": {},
+  "DisabledByDefault": false
 }
