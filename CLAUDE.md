@@ -2,6 +2,25 @@
 
 A Hytale mod that adds a plantable pickle pirate flagpole with wave animation and map marker support.
 
+## Git Workflow (REQUIRED)
+
+**Commit after every phase or significant milestone.** Do not let work accumulate without commits.
+
+- Before starting a new phase: ensure working tree is clean
+- After completing a phase: commit with descriptive message
+- Use format: `Phase N: Brief description of what was done`
+
+```bash
+# Check status before/after work
+git status
+
+# Commit a completed phase
+git add -A
+git commit -m "Phase 5: Add wood texture to pole and crossbar"
+```
+
+This prevents losing work and makes it easy to roll back if something breaks.
+
 ## Project Structure
 
 ```
