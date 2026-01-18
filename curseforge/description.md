@@ -1,6 +1,6 @@
-# Pickle Pirate Flag
+# Pickle Pirate Flag and Map Marker
 
-Plant your flag and claim your territory! A decorative flagpole featuring a pickle pirate skull design with animated wave motion.
+Plant your flag and claim your territory! A decorative flagpole featuring a pickle pirate skull design with animated wave motion and handy map marker that can be renamed. No "Player Discovery" yet, everyone can see.
 
 ## Features
 
@@ -26,12 +26,13 @@ Plant your flag and claim your territory! A decorative flagpole featuring a pick
 ## Crafting
 
 Craft at a **Workbench (Tier 1)**:
+
 - 20x Wood Sticks
 - 10x Linen
 
 ## Usage
 
-1. Craft the Pickle Pirate Flag at a Workbench
+1. Craft the Pickle Pirate Flag at a Workbench on the tool tab.
 2. Place it in the world like any block
 3. The flag will appear on your world map
 4. Right-click the map marker to rename your flag
@@ -43,4 +44,4 @@ Craft at a **Workbench (Tier 1)**:
 
 ## Credits
 
-Created by smolen
+Created by DarthMolen, Inspired by the community that watches Grumbul on twitch.
