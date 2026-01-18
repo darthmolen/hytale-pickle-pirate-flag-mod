@@ -6,7 +6,7 @@
  * doesn't exist in the current Hytale SDK. Once we understand the real interaction
  * system, we can re-implement flag renaming.
  */
-package dev.smolen.pickleflag;
+package pickleflag;
 
 // TODO: Re-implement using actual Hytale interaction API
 // The following code was written for a hypothetical API that doesn't exist:

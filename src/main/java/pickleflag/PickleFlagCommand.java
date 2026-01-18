@@ -2,7 +2,7 @@
  * Pickle Pirate Flag Mod for Hytale
  * Commands for managing placed flags
  */
-package dev.smolen.pickleflag;
+package pickleflag;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;

@@ -2,7 +2,7 @@
  * Pickle Pirate Flag Mod for Hytale
  * Central manager for tracking all placed flags
  */
-package dev.smolen.pickleflag;
+package pickleflag;
 
 import java.util.Collection;
 import java.util.HashMap;

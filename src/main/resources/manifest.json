@@ -1,11 +1,11 @@
 {
-    "Group": "dev.smolen",
+    "Group": "PicklePirate",
     "Name": "PicklePirateFlag",
     "Version": "1.0.0",
     "Description": "Adds a plantable pickle pirate flagpole that waves in the wind and shows as a map marker. Plant your flag to mark your territory!",
     "Authors": [
         {
-            "Name": "smolen"
+            "Name": "DarthMolen"
         }
     ],
     "Website": "",
@@ -15,6 +15,6 @@
     "OptionalDependencies": {
     },
     "DisabledByDefault": false,
-    "Main": "dev.smolen.pickleflag.PickleFlagPlugin",
+    "Main": "pickleflag.PickleFlagPlugin",
     "IncludesAssetPack": false
 }

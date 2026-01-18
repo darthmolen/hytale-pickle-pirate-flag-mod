@@ -2,7 +2,7 @@
  * Pickle Pirate Flag Mod for Hytale
  * UI for renaming placed flags
  */
-package dev.smolen.pickleflag;
+package pickleflag;
 
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;

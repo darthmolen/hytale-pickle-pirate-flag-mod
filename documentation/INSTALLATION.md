@@ -52,7 +52,7 @@ If you already have a Hytale server running:
 6. **Verify installation**
    Check the server logs for:
    ```
-   [INFO] [PluginManager] - dev.smolen:PicklePirateFlag from path PicklePirateFlag-1.0.0.jar
+   [INFO] [PluginManager] - PicklePirate:PicklePirateFlag from path PicklePirateFlag-1.0.0.jar
    [INFO] [PickleFlagPlugin] Pickle Pirate Flag v1.0.0 loading...
    ```
 
@@ -82,7 +82,7 @@ If you already have a Hytale server running:
 ### Server-Side
 Check your server logs in `logs/` folder (files are timestamped like `2026-01-17_12-31-16_server.log`):
 ```
-[INFO] [PluginManager] - dev.smolen:PicklePirateFlag from path PicklePirateFlag-1.0.0.jar
+[INFO] [PluginManager] - PicklePirate:PicklePirateFlag from path PicklePirateFlag-1.0.0.jar
 [INFO] [PickleFlagPlugin] Pickle Pirate Flag v1.0.0 loading...
 ```
 

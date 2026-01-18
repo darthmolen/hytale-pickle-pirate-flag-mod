@@ -2,7 +2,7 @@
  * Pickle Pirate Flag Mod for Hytale
  * Map marker provider for showing flags on the world map
  */
-package dev.smolen.pickleflag;
+package pickleflag;
 
 import com.hypixel.hytale.math.vector.Transform;
 import com.hypixel.hytale.math.vector.Vector3d;

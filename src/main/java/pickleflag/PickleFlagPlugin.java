@@ -2,7 +2,7 @@
  * Pickle Pirate Flag Mod for Hytale
  * A plantable flag that waves in the wind and shows as a map marker
  */
-package dev.smolen.pickleflag;
+package pickleflag;
 
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.component.AddReason;
