@@ -34,3 +34,6 @@ logs/
 
 # Local configuration
 local.properties
+
+# Track Claude Code skills for publishing
+!.claude/skills/
