@@ -7,8 +7,21 @@ This guide covers creating 3D models for Hytale using Blockbench, including geom
 ### Required Tools
 
 1. **Blockbench** - Download from [blockbench.net](https://blockbench.net)
-2. **Hytale Blockbench Plugin** - Install from File > Plugins > Available
-3. **Optional: MCP Plugin** - For automation with Claude Code
+2. **Hytale Blockbench Plugin** - Install from File > Plugins > Available, or from [GitHub](https://github.com/JannisX11/hytale-blockbench-plugin)
+3. **Optional: MCP Plugin** - For automation with Claude Code ([GitHub](https://github.com/jasonjgardner/blockbench-mcp-plugin))
+
+### Installing the Hytale Plugin
+
+1. Open Blockbench
+2. Go to File > Plugins
+3. Search for "Hytale" in the Available tab
+4. Click Install
+
+The plugin provides:
+- Correct export formats (`.blockymodel`, `.blockyanim`)
+- Consistent pixel ratio across textures
+- Quality-of-life improvements for Hytale workflows
+- Proper texel density handling
 
 ### Creating a New Project
 
@@ -16,11 +29,11 @@ This guide covers creating 3D models for Hytale using Blockbench, including geom
 2. Choose format:
    - **Hytale Prop** - For blocks, furniture, decorations (32px density)
    - **Hytale Character** - For characters, weapons, attachments (64px density)
-3. Set texture size (multiple of 32)
+3. Set texture size (must be multiple of 32)
 
 ## Geometry Constraints
 
-Hytale models use only two primitive types:
+Hytale models use only two primitive types. This is a hard requirement.
 
 ### Cubes (Boxes)
 - 6-sided rectangular prisms
@@ -33,13 +46,14 @@ Hytale models use only two primitive types:
 - Can be double-sided
 
 ### What's NOT Allowed
-- Spheres
-- Triangles
-- Complex topology
-- Edge loops
-- Weight painting
+- ❌ Spheres
+- ❌ Triangles
+- ❌ Complex topology
+- ❌ Edge loops
+- ❌ Weight painting
+- ❌ Pyramids
 
-This keeps models simple to create, animate, and optimize.
+This constraint keeps models easy to create, animate, and optimized for rendering thousands simultaneously.
 
 ## Bone Hierarchy
 
@@ -56,6 +70,14 @@ In Blockbench, "bones" are called "groups." They define:
 2. Name it descriptively (e.g., `arm_right`, `flag_1`)
 3. Set origin (pivot point)
 4. Set parent if needed
+
+### Bone Naming Convention
+
+Bones must be properly named for Hytale's animation system. Once correctly named, animations work automatically in-game.
+
+Standard character bones:
+- `body`, `head`, `arm_left`, `arm_right`
+- `leg_left`, `leg_right`, `hand_left`, `hand_right`
 
 ### Hierarchy Design
 
@@ -88,7 +110,7 @@ flag_1 (rotates first)
         └── flag_4 (inherits all, adds own)
 ```
 
-When `flag_1` rotates 5°, all children rotate with it. Then each child adds its own rotation.
+When `flag_1` rotates 5°, all children rotate with it. Then each child adds its own rotation, creating a cascading wave effect.
 
 ## Building Geometry
 
@@ -98,7 +120,7 @@ When `flag_1` rotates 5°, all children rotate with it. Then each child adds its
 2. Edit > Add Cube (or Ctrl+N)
 3. Adjust position and size in Properties panel
 
-Or use the visual tools:
+Visual tools:
 - Move tool (V)
 - Resize tool (S)
 - Rotate tool (R)
@@ -111,21 +133,21 @@ Or use the visual tools:
 | Size | Dimensions (width, height, depth) |
 | Origin | Pivot point for rotation |
 | Rotation | Initial rotation (usually 0,0,0) |
-| UV Offset | Texture mapping position |
+| UV Offset | Texture mapping position (in pixels) |
 | Inflate | Expand/shrink without changing UV |
 
 ### Size and Scale
 
-- 1 unit in Blockbench = 1 pixel on texture (for UV)
+- 1 unit in Blockbench = 1 pixel on texture (for UV mapping)
 - 16 units = 1 Minecraft-style block
 - Player height ≈ 121 units (~1.9 blocks)
 
 ### Stretching
 
-You can stretch geometry to fine-tune sizes:
-- Allowed range: 0.7x to 1.3x per axis
-- Beyond this, pixel distortion becomes visible
-- Use sparingly for adjustments, not as primary sizing
+You can stretch geometry for fine adjustments:
+- **Allowed range**: 0.7x to 1.3x per axis
+- Beyond this, pixel distortion becomes obvious
+- Use sparingly - for avoiding Z-fighting or minor tweaks
 
 ## Animation
 
@@ -144,7 +166,7 @@ Keyframes define bone positions at specific times. Blockbench interpolates betwe
 1. Select bone in Outliner
 2. Move timeline to desired time
 3. Adjust bone rotation/position
-4. Click keyframe button (or auto-keyframe)
+4. Click keyframe button (or enable auto-keyframe)
 
 ### Keyframe Types
 
@@ -198,7 +220,7 @@ flag_4:
 
 Key principles:
 - **Offset timing**: Each segment starts slightly later
-- **Increasing amplitude**: Inner segments rotate more
+- **Increasing amplitude**: Outer segments rotate more
 - **Smooth loop**: Start and end at same position
 
 ## Export
@@ -206,22 +228,92 @@ Key principles:
 ### Model Export
 
 1. File > Export > Hytale Model (.blockymodel)
-2. Choose location (usually in your mod's assets)
+2. Save to your pack's `Common/Blocks/` folder
 
 Or if already saved:
-- File > Export > Export Over
+- File > Export > Export Over (Ctrl+Shift+S)
 
 ### Animation Export
 
-1. Animation menu > Save Animation (.blockyanim)
-2. Place in `Blocks/Animations/` folder
+1. Animation menu > Save Animation
+2. File format: `.blockyanim`
+3. Save to `Common/Blocks/Animations/`
+4. Naming convention: `animation.<name>.blockyanim`
 
-### File Naming
+### File Naming Conventions
 
-Follow Hytale conventions:
-- Models: `model_name.blockymodel`
-- Animations: `animation.animation_name.blockyanim`
-- Textures: `texture_name.png`
+| Type | Pattern | Example |
+|------|---------|---------|
+| Models | `model_name.blockymodel` | `pickle_pirate_flagpole.blockymodel` |
+| Animations | `animation.<name>.blockyanim` | `animation.flag_wave.blockyanim` |
+| Textures | `texture_name.png` | `pickle_pirate_flagpole.png` |
+
+## Pack Structure
+
+Hytale mods use a specific folder structure:
+
+```
+pack/
+├── manifest.json                           # Pack metadata
+├── Common/                                 # Shared assets (client + server)
+│   ├── Blocks/                            # Block models
+│   │   ├── model_name.blockymodel
+│   │   └── Animations/
+│   │       └── animation.anim_name.blockyanim
+│   ├── BlockTextures/                     # Textures for block models
+│   │   └── texture_name.png
+│   ├── Icons/
+│   │   └── ItemsGenerated/                # Item icons (inventory)
+│   │       └── item_icon.png
+│   └── UI/
+│       └── WorldMap/
+│           └── MapMarkers/                # Custom map markers
+│               └── marker.png
+└── Server/                                # Server-side definitions
+    ├── Item/
+    │   └── Items/
+    │       └── Item_Name.json             # Item definition
+    └── Languages/
+        └── en-US/
+            └── server.lang                # Translations
+```
+
+## Item Definition
+
+To make your model appear in-game, create an item definition:
+
+**`pack/Server/Item/Items/Item_Name.json`**:
+
+```json
+{
+  "TranslationProperties": {
+    "Name": "server.items.item_id.name"
+  },
+  "MaxStack": 16,
+  "Icon": "Icons/ItemsGenerated/item_icon.png",
+  "Categories": ["Blocks.Deco"],
+  "BlockType": {
+    "DrawType": "Model",
+    "CustomModel": "Blocks/model_name.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "BlockTextures/texture_name.png",
+        "Weight": 1
+      }
+    ],
+    "CustomModelAnimation": "Blocks/Animations/animation.anim_name.blockyanim",
+    "Looping": true,
+    "CustomModelScale": 1
+  }
+}
+```
+
+Key fields:
+- `CustomModel`: Path to `.blockymodel` (relative to `Common/`)
+- `CustomModelTexture`: Path to texture (relative to `Common/`)
+- `CustomModelAnimation`: Path to animation file
+- `Looping`: Set `true` for continuous animations
+- `CustomModelScale`: Adjust model size (1 = normal)
 
 ## Practical Example: Pickle Pirate Flagpole
 
@@ -250,81 +342,77 @@ flag_1 (bone at Y=120)
 | Crossbar | 82x4x4 | Horizontal, extends past flag |
 | Flag segments | 64x16x1 | Each 1/4 of flag height |
 
-### Animation
+### Files Created
 
-The wave animation:
-- 2 seconds duration, looping
-- Each flag segment rotates on Z axis
-- Timing offset creates ripple effect
-- Amplitude increases toward tip
+| File | Location |
+|------|----------|
+| Model | `Common/Blocks/pickle_pirate_flagpole.blockymodel` |
+| Texture | `Common/BlockTextures/pickle_pirate_flagpole.png` |
+| Animation | `Common/Blocks/Animations/animation.flag_wave.blockyanim` |
+| Item definition | `Server/Item/Items/Pickle_Flag.json` |
 
 ## Best Practices
 
-### From Official Hytale Guidelines
+### From Official Hytale Art Guidelines
 
-1. **Keep geometry simple** - Fewer triangles = better performance
+1. **Keep geometry simple** - Work as simply as possible, increase geometry only to improve silhouette
 2. **Use cubes and quads only** - No spheres or complex shapes
 3. **Name bones correctly** - Animation system depends on naming
-4. **Optimize triangle count** - Several thousand blocks render simultaneously
+4. **Optimize triangle count** - Several thousand blocks render simultaneously, resulting in millions of triangles per frame
+
+### Texturing Tips
+
+1. **Paint shadows into textures** - Don't rely only on in-game lighting
+2. **Avoid pure white (#FFFFFF)** and **pure black (#000000)** - They break in-game lighting
+3. **Add color to shadows** - Hint of purple makes models vibrant
+4. **Avoid noise and grain** - Keep textures clean
+5. **Treat each texture as an illustration** - Simulate lighting in the texture itself
 
 ### Modeling Tips
 
 1. **Plan hierarchy first** - Harder to change later
 2. **Set pivot points early** - Affects all child elements
 3. **Test animations often** - Small issues compound
-4. **Use references** - Import player model for scale
+4. **Use references** - Import player model for scale comparison
 
 ### Performance Considerations
 
 - Every triangle affects frame rate
-- Simpler models = more can be on screen
+- Simpler models = more can be on screen simultaneously
 - Avoid unnecessary subdivision
 - Remove hidden faces when possible
 
 ## Troubleshooting
 
 ### Model doesn't appear in-game
-- Check file path in item/block definition
-- Verify model exported correctly
-- Ensure pack manifest is valid
+- Verify `CustomModel` path in item JSON is correct
+- Check pack `manifest.json` is valid
+- Ensure model exported as `.blockymodel` (not `.bbmodel`)
+- Verify pack is deployed to server's `mods/` folder
 
 ### Animation doesn't play
-- Check animation name matches item definition
-- Verify `Looping: true` in item JSON
+- Check `CustomModelAnimation` path in item JSON
+- Verify `Looping: true` is set in item definition
 - Ensure bone names match between model and animation
+- Check animation file is `.blockyanim` format
 
 ### Bones move unexpectedly
 - Check pivot point positions
 - Verify parent-child relationships
-- Look for keyframes you didn't intend
+- Look for unintended keyframes
 
 ### Scale seems wrong
-- Confirm using correct format (Prop vs Character)
-- Check `CustomModelScale` in item definition
-- Compare against player reference model
+- Confirm using correct format (Prop=32px vs Character=64px)
+- Adjust `CustomModelScale` in item definition
+- Compare against player reference model (~121 units tall)
 
-## File Locations
-
-For a typical Hytale mod:
-
-```
-pack/
-├── Common/
-│   ├── Blocks/
-│   │   ├── model_name.blockymodel
-│   │   └── Animations/
-│   │       └── animation.anim_name.blockyanim
-│   └── BlockTextures/
-│       └── texture_name.png
-└── Server/
-    └── Item/
-        └── Items/
-            └── Item_Name.json  (references model)
-```
+### Texture appears wrong
+- Verify texture dimensions are multiples of 32px
+- Check UV offsets are within texture bounds
+- Ensure texture path in item JSON is correct
 
 ## Related Documentation
 
 - [Texture Creation Guide](texture-creation-guide.md) - Creating and mapping textures
 - [Blockbench MCP Reference](blockbench-mcp-reference.md) - Automation commands
-- [Official Hytale Art Guide](external/CREATING_MODELS.md) - Art direction principles
-- [Gradle Build Process](gradle-build-process.md) - Deploying to server
+- [Official Hytale Art Guide](external/BLOCKBENCH-STUDIO-GUIDE.md) - Art direction principles

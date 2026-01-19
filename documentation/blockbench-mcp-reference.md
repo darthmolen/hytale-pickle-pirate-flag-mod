@@ -8,6 +8,8 @@ Quick reference for Blockbench MCP tools available for automation with Claude Co
 - MCP server at `http://localhost:3000/bb-mcp`
 - Project file open in Blockbench
 
+**Plugin Repository**: https://github.com/jasonjgardner/blockbench-mcp-plugin
+
 ## Essential Tools
 
 ### Inspection
